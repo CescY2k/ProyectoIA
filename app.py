@@ -8,7 +8,14 @@ import numpy as np
 st.header('Flower Classification CNN Model')
 flower_names = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']
 
-model = load_model('Flores_Recog_Model.keras')
+model_path = os.path.join(os.getcwd(), 'Flores_Recog_Model.keras')
+
+# Manejar errores al cargar el modelo
+try:
+    model = load_model(model_path)
+except OSError as e:
+    st.error(f"Error cargando el modelo: {e}")
+    st.stop()
 
 def classify_images(image_path):
     input_image = tf.keras.utils.load_img(image_path, target_size=(180,180))
